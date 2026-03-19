@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reconhecimento de Placas</title>
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body>
+
+<body>
+
+<h1>🚗 Sistema de Reconhecimento de Placas</h1>
+
+<div class="container">
+
+    <!-- CÂMERA -->
+    <div class="camera-box">
+        <img src="{{ url_for('video') }}" width="600">
+
+        <button onclick="loadPlates()">Ver placas</button>
+    </div>
+
+    <!-- LISTA -->
+    <div class="plates-box">
+        <h2>Placas detectadas</h2>
+        <ul id="lista"></ul>
+    </div>
+
+</div>
+
+<script>
+function loadPlates() {
+    fetch('/placas')
+    .then(res => res.json())
+    .then(data => {
+        let lista = document.getElementById('lista');
+        lista.innerHTML = '';
+
+        data.forEach(p => {
+            let li = document.createElement('li');
+            li.textContent = p[1] + " - " + p[2];
+            lista.appendChild(li);
+        });
+    });
+}
+</script>
+
+</body>
+</html>
