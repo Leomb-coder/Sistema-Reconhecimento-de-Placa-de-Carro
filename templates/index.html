@@ -1,27 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
+    <meta charset="UTF-8">
     <title>Reconhecimento de Placas</title>
-    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/icon.png') }}">
 </head>
 <body>
 
-<body>
-
-<h1>🚗 Sistema de Reconhecimento de Placas</h1>
+<header>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/8/8c/SENAI_S%C3%A3o_Paulo_logo.png" class="logo">
+    <h1>Sistema de Reconhecimento de Placas</h1>
+</header>
 
 <div class="container">
 
     <!-- CÂMERA -->
     <div class="camera-box">
-        <img src="{{ url_for('video') }}" width="600">
-
+        <img src="{{ url_for('video') }}" class="camera">
+        <br>
         <button onclick="loadPlates()">Ver placas</button>
     </div>
 
     <!-- LISTA -->
     <div class="plates-box">
-        <h2>Placas detectadas</h2>
+        <h2>Placas Aceitas</h2>
         <ul id="lista"></ul>
     </div>
 

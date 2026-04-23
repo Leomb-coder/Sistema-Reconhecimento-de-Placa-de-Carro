@@ -1,15 +1,17 @@
 from ultralytics import YOLO
 from config import YOLO_MODEL_PATH
+import cv2
 
 model = YOLO(YOLO_MODEL_PATH)
 
 def detect_plate(frame):
     results = model(frame)[0]
 
+    plate_crop = None
+
     for box in results.boxes:
         x1, y1, x2, y2 = map(int, box.xyxy[0])
 
-        # margem extra
         pad = 10
         h, w, _ = frame.shape
 
@@ -18,8 +20,10 @@ def detect_plate(frame):
         x2 = min(w, x2 + pad)
         y2 = min(h, y2 + pad)
 
-        plate = frame[y1:y2, x1:x2]
+        # desenha caixa verde
+        cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
 
-        return plate
+        plate_crop = frame[y1:y2, x1:x2]
+        break
 
-    return None
+    return frame, plate_crop

@@ -6,7 +6,11 @@ import psycopg2
 import datetime
 from config import DB_CONFIG
 import time
+import cv2
 
+# ----------------------------
+# CONTROLE DE DUPLICAÇÃO
+# ----------------------------
 last_plate = None
 last_time = 0
 
@@ -21,6 +25,8 @@ def should_save(plate):
     last_plate = plate
     last_time = now
     return True
+
+# ----------------------------
 app = Flask(__name__)
 
 # ----------------------------
@@ -35,9 +41,9 @@ def save_plate(plate):
         cur = conn.cursor()
 
         cur.execute("""
-            INSERT INTO placas (texto, data)
-            VALUES (%s, %s)
-        """, (plate, datetime.datetime.now()))
+            INSERT INTO placas_reconhecidas (placa, data, permitido)
+            VALUES (%s, %s, %s)
+        """, (plate, datetime.datetime.now(), True))
 
         conn.commit()
         cur.close()
@@ -56,15 +62,25 @@ def index():
     return render_template('index.html')
 
 def generate_frames():
-    for frame, frame_bytes in get_camera_frames():
+    for frame, _ in get_camera_frames():
 
-        plate_img = detect_plate(frame)
+        # detecta e desenha caixa
+        frame, plate_img = detect_plate(frame)
 
         if plate_img is not None:
             text = read_plate(plate_img)
 
             if text and should_save(text):
                 save_plate(text)
+
+                # mostra texto na tela
+                cv2.putText(frame, text, (20, 40),
+                            cv2.FONT_HERSHEY_SIMPLEX,
+                            1, (0,255,0), 2)
+
+        # envia frame atualizado
+        _, buffer = cv2.imencode('.jpg', frame)
+        frame_bytes = buffer.tobytes()
 
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame_bytes + b'\r\n')
@@ -79,7 +95,7 @@ def placas():
     conn = connect_db()
     cur = conn.cursor()
 
-    cur.execute("SELECT * FROM placas ORDER BY data DESC")
+    cur.execute("SELECT * FROM placas_permitidas")
     dados = cur.fetchall()
 
     cur.close()

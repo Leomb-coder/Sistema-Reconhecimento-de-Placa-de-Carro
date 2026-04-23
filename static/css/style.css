@@ -1,72 +1,101 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Fundo */
 body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #0f172a;
-            color: white;
-        }
+    background-color: #111;
+    color: white;
+}
 
-        h1 {
-            text-align: center;
-            padding: 20px;
-        }
+/* Header estilo SENAI */
+header {
+    background-color: #d60000;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 15px 30px;
+    gap: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
 
-        .container {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            padding: 20px;
-        }
+.logo {
+    height: 50px;
+}
 
-        .camera-box {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+header h1 {
+    font-size: 22px;
+    font-weight: bold;
+}
 
-        .camera-box img {
-            border-radius: 10px;
-            border: 3px solid #22c55e;
-        }
+/* Layout principal */
+.container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    padding: 40px;
+}
 
-        .camera-box button {
-            margin-top: 15px;
-            padding: 10px 20px;
-            background-color: #22c55e;
-            border: none;
-            border-radius: 8px;
-            color: black;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.2s;
-        }
+/* Caixa da câmera */
+.camera-box {
+    background-color: #1a1a1a;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #d60000;
+    text-align: center;
+}
 
-        .camera-box button:hover {
-            background-color: #16a34a;
-        }
+.camera {
+    border-radius: 10px;
+    width: 600px;
+    border: 3px solid #000;
+}
 
-        .plates-box {
-            width: 300px;
-            background-color: #1e293b;
-            border-radius: 10px;
-            padding: 15px;
-            overflow-y: auto;
-            max-height: 400px;
-        }
+/* Botão */
+button {
+    margin-top: 15px;
+    padding: 12px 20px;
+    background-color: #d60000;
+    border: none;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s;
+}
 
-        .plates-box h2 {
-            text-align: center;
-            margin-bottom: 10px;
-        }
+button:hover {
+    background-color: #ff1a1a;
+}
 
-        #lista {
-            list-style: none;
-            padding: 0;
-        }
+/* Caixa de placas */
+.plates-box {
+    background-color: #1a1a1a;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #d60000;
+    min-width: 300px;
+}
 
-        #lista li {
-            background-color: #334155;
-            margin-bottom: 8px;
-            padding: 10px;
-            border-radius: 6px;
-            font-size: 14px;
-        }
+.plates-box h2 {
+    margin-bottom: 15px;
+    border-bottom: 2px solid #d60000;
+    padding-bottom: 5px;
+}
+
+/* Lista */
+ul {
+    list-style: none;
+}
+
+li {
+    background-color: #222;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-left: 5px solid #d60000;
+    border-radius: 5px;
+}
